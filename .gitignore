@@ -1,0 +1,43 @@
+# Devcontainer / venvs
+.devcontainer/.runtime/
+backend/.venv/
+
+# Python
+backend/__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+
+# C++ analyzer build artifacts
+backend/analyzer
+backend/analyzer.exe
+backend/build/
+backend/CMakeCache.txt
+backend/CMakeFiles/
+backend/cmake_install.cmake
+backend/CTestTestfile.cmake
+backend/Testing/
+backend/*.vcxproj
+backend/*.vcxproj.filters
+backend/*.sln
+backend/Debug/
+backend/Release/
+backend/x64/
+backend/x86/
+backend/*.dir/
+
+# SQLite databases
+backend/app.db
+*.db
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+internal/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
