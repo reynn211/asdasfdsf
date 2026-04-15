@@ -1,0 +1,31 @@
+__pycache__/
+*.pyc
+*.pyo
+.env
+*.db
+
+# Compiled C++ analyzer binary (root-anchored so it doesn't match
+# the include/analyzer/ source directory).
+/analyzer
+/analyzer.exe
+
+# CMake out-of-source build directory.
+/build/
+
+# In-source CMake/MSBuild artifacts (in case someone configures CMake at
+# backend/ root instead of using -B build).
+/CMakeCache.txt
+/CMakeFiles/
+/cmake_install.cmake
+/CTestTestfile.cmake
+/Testing/
+/*.vcxproj
+/*.vcxproj.filters
+/*.sln
+/Debug/
+/Release/
+/x64/
+/x86/
+/analyzer_core.dir/
+/analyzer.dir/
+/tokenizer_tests.dir/
