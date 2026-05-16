@@ -9,6 +9,10 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 add_library(analyzer_core
     src/tokenizer.cpp
     src/stop_words.cpp
+    src/stemmer.cpp
+    src/ngrams.cpp
+    src/language.cpp
+    src/readability.cpp
 )
 
 target_include_directories(analyzer_core
@@ -41,3 +45,14 @@ target_link_libraries(tokenizer_tests
 )
 
 add_test(NAME tokenizer_tests COMMAND tokenizer_tests)
+
+add_executable(stemmer_tests
+    tests/stemmer_tests.cpp
+)
+
+target_link_libraries(stemmer_tests
+    PRIVATE
+        analyzer_core
+)
+
+add_test(NAME stemmer_tests COMMAND stemmer_tests)
