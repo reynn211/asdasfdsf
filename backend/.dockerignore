@@ -1,0 +1,28 @@
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.venv/
+*.db
+.env
+
+# CMake artefacts — rebuilt inside the image.
+build/
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+CTestTestfile.cmake
+Testing/
+
+# Pre-built analyzer from host — image builds its own.
+/analyzer
+/analyzer.exe
+
+# VS / MSBuild leftovers.
+*.vcxproj
+*.vcxproj.filters
+*.sln
+Debug/
+Release/
+x64/
+x86/

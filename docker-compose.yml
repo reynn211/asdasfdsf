@@ -1,0 +1,52 @@
+# docker compose up --build
+#
+# Frontend is exposed on http://localhost:5173 (same port as the dev server)
+# and reverse-proxies /api/* to the backend service on the internal network.
+# The backend is also published on :8000 for direct curl / OpenAPI access.
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: vk-nlp-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      # Persist the SQLite history DB across container rebuilds.
+      - backend-data:/app/data-store
+    environment:
+      # database.py writes app.db next to itself (/app/app.db); we mount the
+      # volume on a sibling path and symlink so the DB survives rebuilds
+      # without changing application code.
+      PYTHONUNBUFFERED: "1"
+    # Keep app.db inside the persisted volume.
+    command:
+      - sh
+      - -c
+      - |
+        mkdir -p /app/data-store && \
+        if [ ! -e /app/app.db ]; then ln -s /app/data-store/app.db /app/app.db; fi && \
+        exec uvicorn main:app --host 0.0.0.0 --port 8000
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8000/api/history"]
+      interval: 30s
+      timeout: 5s
+      start_period: 10s
+      retries: 3
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: vk-nlp-frontend
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_started
+    ports:
+      - "5173:80"
+
+volumes:
+  backend-data:
