@@ -1,0 +1,21 @@
+# Render Blueprint — deploy with "New > Blueprint" pointing at this repo.
+# Docs: https://docs.render.com/blueprint-spec
+#
+# Free tier: no persistent disk — SQLite history resets on each deploy.
+# For persistent storage, upgrade to a paid plan and uncomment the disk section.
+
+services:
+  - type: web
+    name: chastoslov
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    healthCheckPath: /api/history
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: "1"
+    # Uncomment on paid plan for persistent SQLite:
+    # disk:
+    #   name: data
+    #   mountPath: /app/data-store
+    #   sizeGB: 1
